@@ -11,6 +11,7 @@ Options:
     --limit N      classify at most N posts this run (pilot batches)
     --model M      claude model alias (default: leave to claude CLI default)
     --batch N      posts per claude call (default 12)
+    --workers N    concurrent claude calls (default 4)
 """
 import argparse
 import json
@@ -18,7 +19,9 @@ import os
 import re
 import subprocess
 import sys
+import threading
 from collections import defaultdict
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 POSTS = os.path.join(HERE, "posts.jsonl")
@@ -156,6 +159,7 @@ def main():
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--model", default="")
     ap.add_argument("--batch", type=int, default=12)
+    ap.add_argument("--workers", type=int, default=4)
     args = ap.parse_args()
 
     posts, followups, n_cand, n_done = load_inputs(args.limit)
@@ -163,37 +167,43 @@ def main():
     if not posts:
         return
 
+    batches = [posts[i:i + args.batch] for i in range(0, len(posts), args.batch)]
     out = open(OUT, "a")
-    ok = failed = 0
-    for i in range(0, len(posts), args.batch):
-        batch = posts[i:i + args.batch]
+    lock = threading.Lock()
+    ok = failed = done_batches = 0
+
+    def work(batch):
         ids = {p["id"] for p in batch}
         prompt = PROMPT_HEADER + "\n\n".join(render_post(p, followups) for p in batch)
-
-        results = []
         for attempt in (1, 2):
             try:
-                results = parse_response(run_claude(prompt, args.model), ids)
-                break
+                return ids, parse_response(run_claude(prompt, args.model), ids)
             except Exception as e:
-                print(f"  batch {i // args.batch + 1} attempt {attempt} failed: {e}",
+                print(f"  batch attempt {attempt} failed: {e}",
                       file=sys.stderr, flush=True)
-        if not results:
-            failed += len(batch)
-            with open(ERRLOG, "a") as elog:
-                elog.write(f"batch failed: {sorted(ids)}\n")
-            continue
+        return ids, []
 
-        for r in results:
-            out.write(json.dumps(r, ensure_ascii=False) + "\n")
-        out.flush()
-        ok += len(results)
-        missing = ids - {r["id"] for r in results}
-        if missing:
-            print(f"  warn: batch returned {len(results)}/{len(batch)}, "
-                  f"missing {sorted(missing)} (will retry next run)", flush=True)
-        print(f"progress: {ok} classified, {failed} failed, "
-              f"{len(posts) - i - len(batch)} remaining", flush=True)
+    with ThreadPoolExecutor(max_workers=args.workers) as pool:
+        futures = [pool.submit(work, b) for b in batches]
+        for fut in as_completed(futures):
+            ids, results = fut.result()
+            with lock:
+                done_batches += 1
+                if not results:
+                    failed += len(ids)
+                    with open(ERRLOG, "a") as elog:
+                        elog.write(f"batch failed: {sorted(ids)}\n")
+                else:
+                    for r in results:
+                        out.write(json.dumps(r, ensure_ascii=False) + "\n")
+                    out.flush()
+                    ok += len(results)
+                    missing = ids - {r["id"] for r in results}
+                    if missing:
+                        print(f"  warn: missing {sorted(missing)} (retry next run)",
+                              flush=True)
+                print(f"progress: {done_batches}/{len(batches)} batches, "
+                      f"{ok} classified, {failed} failed", flush=True)
 
     out.close()
     print(f"done: +{ok} classifications ({failed} failed; rerun to retry)", flush=True)

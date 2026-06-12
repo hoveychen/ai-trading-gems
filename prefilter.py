@@ -83,6 +83,11 @@ def evaluate(p, followup_chars, followup_count):
             and followup_chars < MIN_AUTHOR_FOLLOWUP:
         return False, ["promo_link_no_substance"], signals
 
+    # High score alone is not readable content: removed/empty body, no author
+    # follow-up, no discussion -> nothing to archive or read.
+    if body_len < 50 and followup_chars == 0 and n_comments == 0:
+        return False, ["nothing_to_read"], signals
+
     if body_len >= MIN_BODY:
         reasons.append(f"body>={MIN_BODY}")
     if followup_chars >= MIN_AUTHOR_FOLLOWUP:
