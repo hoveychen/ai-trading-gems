@@ -11,6 +11,12 @@ comments.jsonl
 # local research output (dump.py)
 research/
 
+# run logs
+scrape.log
+classify.log
+classify_errors.log
+
 # misc
 .DS_Store
 __pycache__/
+.playwright-cli/

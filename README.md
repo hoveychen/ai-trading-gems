@@ -8,6 +8,11 @@ analysis with `claude -p`.
 
 **Live site**: https://hoveychen.github.io/ai-trading-gems/
 
+![Screenshot of the ai-trading-gems reader](screenshot.png)
+
+**54,260** posts archived (2020-09 → today) · **2,625** prefilter candidates ·
+LLM-classified: **239 gem** / 908 ok / 1,478 hype
+
 ## How it works
 
 ```
