@@ -23,6 +23,12 @@ EMPTY_BODIES = {"", "[removed]", "[deleted]"}
 PROMO_RE = re.compile(
     r"(discord\.gg|t\.me/|telegram|dm me|join my (free )?(group|channel|server)"
     r"|link in bio|whatsapp)", re.I)
+URL_RE = re.compile(r"https?://\S+|\[([^\]]*)\]\([^)]*\)")
+
+
+def substantive_len(body):
+    """Body length with URLs stripped — link-stuffed template spam scores ~0."""
+    return len(re.sub(r"\s+", " ", URL_RE.sub(r"\1", body)).strip())
 
 # Thresholds — tune freely; reasons are recorded per post so effects are auditable.
 MIN_BODY = 300            # chars of selftext that count as a substantive body
@@ -59,7 +65,7 @@ def load_author_followups():
 
 def evaluate(p, followup_chars, followup_count):
     body = (p.get("selftext") or "").strip()
-    body_len = 0 if body in EMPTY_BODIES else len(body)
+    body_len = 0 if body in EMPTY_BODIES else substantive_len(body)
     score = p.get("score") or 0
     n_comments = p.get("num_comments") or 0
     title = p.get("title") or ""

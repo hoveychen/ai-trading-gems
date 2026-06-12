@@ -2,7 +2,9 @@
 """Build the browser dataset: data.json (post index) + threads/<id>.json (full threads).
 
 Inputs:  posts.jsonl, comments.jsonl, candidates.jsonl, classifications.jsonl
-Outputs: data.json          — every post, with preview + status, newest first
+Outputs: data.json          — candidate/classified posts with preview, newest first
+         filtered.json      — prefilter-rejected posts, minimal fields (the UI
+                              lazy-loads this only when the filtered chip is on)
          threads/<id>.json  — full post body + nested comment tree, one file per
                               prefilter-passed post (fetched on demand by the UI)
 
@@ -12,6 +14,7 @@ Post status: "filtered"  failed prefilter (still listed, de-emphasized)
 """
 import json
 import os
+import re
 import shutil
 from collections import defaultdict
 
@@ -21,10 +24,22 @@ COMMENTS = os.path.join(HERE, "comments.jsonl")
 CANDIDATES = os.path.join(HERE, "candidates.jsonl")
 CLASSIFICATIONS = os.path.join(HERE, "classifications.jsonl")
 DATA_OUT = os.path.join(HERE, "data.json")
+FILTERED_OUT = os.path.join(HERE, "filtered.json")
 THREADS_DIR = os.path.join(HERE, "threads")
 
 PREVIEW_LEN = 400
+PREVIEW_LEN_FILTERED = 160   # filtered posts are ~95% of the index; keep them light
 EMPTY = {"", "[removed]", "[deleted]"}
+MD_LINK_RE = re.compile(r"\[([^\]]*)\]\([^)]*\)")
+URL_RE = re.compile(r"https?://\S+")
+
+
+def preview_text(body):
+    """Plain-text preview: markdown links -> text, raw URLs dropped, md noise out."""
+    t = MD_LINK_RE.sub(r"\1", body)
+    t = URL_RE.sub("", t)
+    t = re.sub(r"[#*`>|]+", " ", t)
+    return re.sub(r"\s+", " ", t).strip()
 
 
 def load_jsonl_by_id(path):
@@ -87,6 +102,7 @@ def main():
     os.makedirs(THREADS_DIR)
 
     index = []
+    filtered = []
     n_threads = 0
     status_counts = defaultdict(int)
     for pid, p in posts.items():
@@ -105,7 +121,22 @@ def main():
         body = (p.get("selftext") or "").strip()
         if body in EMPTY:
             body = ""
+        body = preview_text(body)
         signals = cand.get("signals", {})
+
+        if not is_candidate and not cls:
+            filtered.append({
+                "id": pid,
+                "title": p.get("title") or "",
+                "author": p.get("author") or "[deleted]",
+                "created_utc": p.get("created_utc") or 0,
+                "score": p.get("score") or 0,
+                "num_comments": p.get("num_comments") or 0,
+                "preview": body[:PREVIEW_LEN_FILTERED],
+                "status": "filtered",
+                "author_followups": 0,
+            })
+            continue
 
         entry = {
             "id": pid,
@@ -145,6 +176,7 @@ def main():
             n_threads += 1
 
     index.sort(key=lambda e: -e["created_utc"])
+    filtered.sort(key=lambda e: -e["created_utc"])
     import datetime as dt
     payload = {
         "subreddit": "ai_trading",
@@ -154,9 +186,12 @@ def main():
     }
     with open(DATA_OUT, "w") as f:
         json.dump(payload, f, ensure_ascii=False, separators=(",", ":"))
+    with open(FILTERED_OUT, "w") as f:
+        json.dump(filtered, f, ensure_ascii=False, separators=(",", ":"))
 
-    size_mb = os.path.getsize(DATA_OUT) / 1e6
-    print(f"data.json: {len(index)} posts, {size_mb:.1f} MB")
+    print(f"data.json: {len(index)} posts, {os.path.getsize(DATA_OUT) / 1e6:.1f} MB")
+    print(f"filtered.json: {len(filtered)} posts, "
+          f"{os.path.getsize(FILTERED_OUT) / 1e6:.1f} MB")
     print(f"threads/: {n_threads} files")
     print("status:", dict(status_counts))
 

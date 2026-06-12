@@ -341,7 +341,7 @@ function persist(){ clearTimeout(saveTimer); saveTimer=setTimeout(()=>localStora
 const F = { q:"", status:new Set(["gem","ok","pending"]), tags:new Set(), year:"", sort:"new",
             unread:false, starred:false, noted:false, followup:false };
 
-let DATA=null, POSTS=[], BYID={}, VIEW=[], shown=0, selIdx=-1, curPost=null;
+let DATA=null, POSTS=[], BYID={}, VIEW=[], shown=0, selIdx=-1, curPost=null, filteredLoaded=false;
 const threadCache=new Map();
 const BATCH=60;
 const STATUSES=[["gem","GEM 有料"],["ok","OK 一般"],["pending","待分类"],["hype","HYPE 吹水"],["filtered","已预筛除"]];
@@ -376,16 +376,28 @@ function noteLinks(text){ const out=new Set(); let m; wikiRe.lastIndex=0;
 /* ================= boot ================= */
 fetch("data.json").then(r=>r.json()).then(d=>{
   DATA=d; POSTS=d.posts; POSTS.forEach(p=>BYID[p.id]=p);
-  $("#built").textContent="抓取于 "+d.built_at+" · "+POSTS.length.toLocaleString()+" 帖";
+  const total=Object.values(d.counts||{}).reduce((a,b)=>a+b,0)||POSTS.length;
+  $("#built").textContent="抓取于 "+d.built_at+" · "+total.toLocaleString()+" 帖";
   buildRail(); apply();
 }).catch(e=>{ $("#count").textContent="加载 data.json 失败 — 请通过 HTTP 服务器访问（./serve.sh）"; });
+
+function loadFiltered(){
+  toast("加载预筛除帖子…（仅首次，文件较大）");
+  fetch("filtered.json").then(r=>r.json()).then(arr=>{
+    filteredLoaded=true;
+    arr.forEach(p=>{ if(!BYID[p.id]){ BYID[p.id]=p; POSTS.push(p); } });
+    apply();
+  }).catch(()=>toast("filtered.json 加载失败"));
+}
 
 function buildRail(){
   const c=DATA.counts||{};
   $("#statusrail").innerHTML=STATUSES.map(([k,label])=>
     `<button class="chip ${F.status.has(k)?"on":""}" data-st="${k}"><span class="dot ${k}"></span>${label}<span class="ct">${(c[k]||0).toLocaleString()}</span></button>`).join("");
   $("#statusrail").querySelectorAll(".chip").forEach(b=>b.onclick=()=>{
-    const k=b.dataset.st; F.status.has(k)?F.status.delete(k):F.status.add(k); b.classList.toggle("on"); apply();
+    const k=b.dataset.st; F.status.has(k)?F.status.delete(k):F.status.add(k); b.classList.toggle("on");
+    if(k==="filtered"&&F.status.has("filtered")&&!filteredLoaded){ loadFiltered(); return; }
+    apply();
   });
   const tags=new Set(); POSTS.forEach(p=>(p.tags||[]).forEach(t=>tags.add(t)));
   $("#tagrail").innerHTML=[...tags].sort().map(t=>`<button class="tagchip" data-t="${t}">${t}</button>`).join("")||'<span style="font-size:12px;color:var(--txt-faint)">分类后出现</span>';
