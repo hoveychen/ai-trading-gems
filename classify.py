@@ -143,6 +143,16 @@ def parse_response(text, expected_ids):
     return results
 
 
+class RateLimited(Exception):
+    """Session-level failure (rate limit / quota / auth) — retrying other
+    batches is pointless until it clears; abort the run, resume later."""
+
+
+RATE_LIMIT_RE = re.compile(
+    r"(rate.?limit|usage limit|limit reached|too many requests|429"
+    r"|overloaded|quota|credit balance|login|authenticat)", re.I)
+
+
 def run_claude(prompt, model):
     cmd = ["claude", "-p", "--output-format", "text"]
     if model:
@@ -150,7 +160,13 @@ def run_claude(prompt, model):
     proc = subprocess.run(cmd, input=prompt, capture_output=True, text=True,
                           timeout=600)
     if proc.returncode != 0:
-        raise RuntimeError(f"claude exited {proc.returncode}: {proc.stderr[:500]}")
+        blob = (proc.stderr + " " + proc.stdout)[:1000]
+        if RATE_LIMIT_RE.search(blob):
+            raise RateLimited(blob.strip()[:300])
+        raise RuntimeError(f"claude exited {proc.returncode}: {blob[:500]}")
+    if RATE_LIMIT_RE.search(proc.stdout[:300]) and "[" not in proc.stdout[:300]:
+        # exit 0 but the "response" is an error banner, not JSON
+        raise RateLimited(proc.stdout.strip()[:300])
     return proc.stdout
 
 
@@ -170,14 +186,27 @@ def main():
     batches = [posts[i:i + args.batch] for i in range(0, len(posts), args.batch)]
     out = open(OUT, "a")
     lock = threading.Lock()
-    ok = failed = done_batches = 0
+    stop = threading.Event()      # set on rate limit / repeated failures
+    stop_reason = []
+    ok = failed = done_batches = skipped = 0
+    consec_failures = 0
+    MAX_CONSEC_FAILURES = 3
 
     def work(batch):
+        if stop.is_set():
+            return None, None     # session is dead, don't burn more calls
         ids = {p["id"] for p in batch}
         prompt = PROMPT_HEADER + "\n\n".join(render_post(p, followups) for p in batch)
         for attempt in (1, 2):
+            if stop.is_set():
+                return None, None
             try:
                 return ids, parse_response(run_claude(prompt, args.model), ids)
+            except RateLimited as e:
+                if not stop.is_set():
+                    stop.set()
+                    stop_reason.append(f"rate limited / session error: {e}")
+                return None, None
             except Exception as e:
                 print(f"  batch attempt {attempt} failed: {e}",
                       file=sys.stderr, flush=True)
@@ -188,12 +217,21 @@ def main():
         for fut in as_completed(futures):
             ids, results = fut.result()
             with lock:
+                if ids is None:   # skipped after stop
+                    skipped += 1
+                    continue
                 done_batches += 1
                 if not results:
                     failed += len(ids)
+                    consec_failures += 1
+                    if consec_failures >= MAX_CONSEC_FAILURES and not stop.is_set():
+                        stop.set()
+                        stop_reason.append(
+                            f"{consec_failures} consecutive batch failures")
                     with open(ERRLOG, "a") as elog:
                         elog.write(f"batch failed: {sorted(ids)}\n")
                 else:
+                    consec_failures = 0
                     for r in results:
                         out.write(json.dumps(r, ensure_ascii=False) + "\n")
                     out.flush()
@@ -206,6 +244,11 @@ def main():
                       f"{ok} classified, {failed} failed", flush=True)
 
     out.close()
+    if stop.is_set():
+        print(f"ABORTED EARLY: {'; '.join(stop_reason)}", flush=True)
+        print(f"  +{ok} classified, {failed} failed, ~{skipped} batches skipped. "
+              f"Progress is saved — rerun classify.py later to resume.", flush=True)
+        sys.exit(2)
     print(f"done: +{ok} classifications ({failed} failed; rerun to retry)", flush=True)
 
 
