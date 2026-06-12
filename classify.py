@@ -125,7 +125,19 @@ def parse_response(text, expected_ids):
     m = re.search(r"\[.*\]", text, re.S)
     if not m:
         raise ValueError("no JSON array in response")
-    arr = json.loads(m.group(0))
+    try:
+        arr = json.loads(m.group(0))
+    except json.JSONDecodeError:
+        # Malformed array (usually an unescaped quote in one summary).
+        # Salvage the individual objects that do parse.
+        arr = []
+        for om in re.finditer(r"\{[^{}]*\}", m.group(0)):
+            try:
+                arr.append(json.loads(om.group(0)))
+            except json.JSONDecodeError:
+                continue
+        if not arr:
+            raise
     results = []
     for obj in arr:
         if not isinstance(obj, dict) or obj.get("id") not in expected_ids:
@@ -149,8 +161,9 @@ class RateLimited(Exception):
 
 
 RATE_LIMIT_RE = re.compile(
-    r"(rate.?limit|usage limit|limit reached|too many requests|429"
-    r"|overloaded|quota|credit balance|login|authenticat)", re.I)
+    r"(rate.?limit|usage limit|session limit|hit your .{0,20}limit|limit reached"
+    r"|resets \d|too many requests|429|overloaded|quota|credit balance"
+    r"|login|authenticat)", re.I)
 
 
 def run_claude(prompt, model):
