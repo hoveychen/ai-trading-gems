@@ -1,0 +1,16 @@
+# agent scratch state
+TASKS.md
+.worktrees/
+
+# raw archives (regenerate with scrape.py)
+posts.jsonl
+comments.jsonl
+.cursor_posts
+.cursor_comments
+
+# local research output (dump.py)
+research/
+
+# misc
+.DS_Store
+__pycache__/
