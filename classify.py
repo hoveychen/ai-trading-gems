@@ -20,6 +20,7 @@ import re
 import subprocess
 import sys
 import threading
+import time
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -156,8 +157,13 @@ def parse_response(text, expected_ids):
 
 
 class RateLimited(Exception):
-    """Session-level failure (rate limit / quota / auth) — retrying other
-    batches is pointless until it clears; abort the run, resume later."""
+    """Session-level failure (rate limit / quota / auth). The operator swaps
+    accounts when this hits, so workers wait 30s and knock again instead of
+    aborting (capped — see LIMIT_RETRY_MAX)."""
+
+
+LIMIT_RETRY_SLEEP = 30        # seconds between retries while rate limited
+LIMIT_RETRY_MAX = 120         # give up after ~1h of continuous limiting
 
 
 RATE_LIMIT_RE = re.compile(
@@ -206,24 +212,30 @@ def main():
     MAX_CONSEC_FAILURES = 3
 
     def work(batch):
-        if stop.is_set():
-            return None, None     # session is dead, don't burn more calls
         ids = {p["id"] for p in batch}
         prompt = PROMPT_HEADER + "\n\n".join(render_post(p, followups) for p in batch)
-        for attempt in (1, 2):
-            if stop.is_set():
-                return None, None
+        attempts = limit_hits = 0
+        while not stop.is_set():
             try:
                 return ids, parse_response(run_claude(prompt, args.model), ids)
             except RateLimited as e:
-                if not stop.is_set():
-                    stop.set()
-                    stop_reason.append(f"rate limited / session error: {e}")
-                return None, None
+                limit_hits += 1
+                if limit_hits >= LIMIT_RETRY_MAX:
+                    if not stop.is_set():
+                        stop.set()
+                        stop_reason.append(f"rate limited for ~1h straight: {e}")
+                    return None, None
+                if limit_hits == 1 or limit_hits % 10 == 0:
+                    print(f"  rate limited (x{limit_hits}) — retrying in "
+                          f"{LIMIT_RETRY_SLEEP}s: {str(e)[:100]}", flush=True)
+                time.sleep(LIMIT_RETRY_SLEEP)
             except Exception as e:
-                print(f"  batch attempt {attempt} failed: {e}",
+                attempts += 1
+                print(f"  batch attempt {attempts} failed: {e}",
                       file=sys.stderr, flush=True)
-        return ids, []
+                if attempts >= 2:
+                    return ids, []
+        return None, None         # stop was set elsewhere
 
     with ThreadPoolExecutor(max_workers=args.workers) as pool:
         futures = [pool.submit(work, b) for b in batches]
