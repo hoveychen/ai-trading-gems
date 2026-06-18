@@ -54224,7 +54224,7 @@
 {"id": "1u2nmer", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
 {"id": "1u2nr4z", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
 {"id": "1u2nw0x", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
-{"id": "1u2pahe", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 812, "author_followup_chars": 0, "author_followup_count": 0, "score": 2, "num_comments": 1}}
+{"id": "1u2pahe", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 812, "author_followup_chars": 226, "author_followup_count": 1, "score": 2, "num_comments": 1}}
 {"id": "1u2ralv", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 3677, "author_followup_chars": 0, "author_followup_count": 0, "score": 0, "num_comments": 1}}
 {"id": "1u2rmr5", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
 {"id": "1u2s7ip", "candidate": false, "reasons": ["no_substance_signal"], "signals": {"body_len": 202, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 1}}
@@ -54329,7 +54329,7 @@
 {"id": "1u67sri", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 40, "author_followup_chars": 0, "author_followup_count": 0, "score": 3, "num_comments": 0}}
 {"id": "1u67uyw", "candidate": true, "reasons": ["body>=300", "author_followup>=300"], "signals": {"body_len": 2417, "author_followup_chars": 660, "author_followup_count": 4, "score": 16, "num_comments": 9}}
 {"id": "1u688m9", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
-{"id": "1u68h7h", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 755, "author_followup_chars": 0, "author_followup_count": 0, "score": 4, "num_comments": 0}}
+{"id": "1u68h7h", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 755, "author_followup_chars": 113, "author_followup_count": 1, "score": 4, "num_comments": 0}}
 {"id": "1u68k1s", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 463, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
 {"id": "1u69flr", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
 {"id": "1u6bp0q", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 1540, "author_followup_chars": 280, "author_followup_count": 1, "score": 17, "num_comments": 5}}
@@ -54344,34 +54344,34 @@
 {"id": "1u6mzag", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 1315, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
 {"id": "1u6qk8c", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 1328, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
 {"id": "1u6r1zm", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
-{"id": "1u6r3xr", "candidate": false, "reasons": ["no_substance_signal"], "signals": {"body_len": 0, "author_followup_chars": 262, "author_followup_count": 5, "score": 1, "num_comments": 0}}
-{"id": "1u6u3z7", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 326, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u6r3xr", "candidate": false, "reasons": ["no_substance_signal"], "signals": {"body_len": 0, "author_followup_chars": 262, "author_followup_count": 5, "score": 6, "num_comments": 11}}
+{"id": "1u6u3z7", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 326, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 2}}
 {"id": "1u6yo4k", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
 {"id": "1u6zvgb", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 443, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
 {"id": "1u73ay3", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
-{"id": "1u740qw", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u740qw", "candidate": false, "reasons": ["no_substance_signal"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 1}}
 {"id": "1u76czd", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
 {"id": "1u78ijb", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
-{"id": "1u78mqy", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u78mqy", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 2, "num_comments": 0}}
 {"id": "1u78nr8", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
 {"id": "1u792ox", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
-{"id": "1u79jr1", "candidate": true, "reasons": ["body>=300", "author_followup>=300"], "signals": {"body_len": 518, "author_followup_chars": 535, "author_followup_count": 11, "score": 1, "num_comments": 0}}
+{"id": "1u79jr1", "candidate": true, "reasons": ["body>=300", "author_followup>=300", "comments>=15"], "signals": {"body_len": 518, "author_followup_chars": 535, "author_followup_count": 11, "score": 3, "num_comments": 28}}
 {"id": "1u79n0w", "candidate": false, "reasons": ["no_substance_signal"], "signals": {"body_len": 102, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
-{"id": "1u79oaf", "candidate": false, "reasons": ["no_substance_signal"], "signals": {"body_len": 102, "author_followup_chars": 40, "author_followup_count": 2, "score": 1, "num_comments": 0}}
-{"id": "1u7b9sg", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 1308, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
-{"id": "1u7ctod", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
-{"id": "1u7e1vz", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 2042, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u79oaf", "candidate": false, "reasons": ["no_substance_signal"], "signals": {"body_len": 102, "author_followup_chars": 40, "author_followup_count": 2, "score": 0, "num_comments": 6}}
+{"id": "1u7b9sg", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 1308, "author_followup_chars": 0, "author_followup_count": 0, "score": 2, "num_comments": 0}}
+{"id": "1u7ctod", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 2, "num_comments": 0}}
+{"id": "1u7e1vz", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 2042, "author_followup_chars": 0, "author_followup_count": 0, "score": 2, "num_comments": 1}}
 {"id": "1u7e27t", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
-{"id": "1u7e2m4", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 2571, "author_followup_chars": 75, "author_followup_count": 1, "score": 1, "num_comments": 0}}
-{"id": "1u7fzu9", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 2073, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
-{"id": "1u7gqkm", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 11181, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u7e2m4", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 2571, "author_followup_chars": 75, "author_followup_count": 1, "score": 1, "num_comments": 1}}
+{"id": "1u7fzu9", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 2073, "author_followup_chars": 0, "author_followup_count": 0, "score": 0, "num_comments": 0}}
+{"id": "1u7gqkm", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 11181, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 3}}
 {"id": "1u7ib42", "candidate": false, "reasons": ["no_substance_signal"], "signals": {"body_len": 54, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
 {"id": "1u7ii6x", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
 {"id": "1u7juua", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
-{"id": "1u7mc0u", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
-{"id": "1u7ms09", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 805, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
-{"id": "1u7n3o7", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 897, "author_followup_chars": 288, "author_followup_count": 2, "score": 1, "num_comments": 0}}
-{"id": "1u7nejo", "candidate": true, "reasons": ["body>=300", "author_followup>=300"], "signals": {"body_len": 910, "author_followup_chars": 1423, "author_followup_count": 4, "score": 1, "num_comments": 0}}
+{"id": "1u7mc0u", "candidate": false, "reasons": ["no_substance_signal"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 0, "num_comments": 3}}
+{"id": "1u7ms09", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 805, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 2}}
+{"id": "1u7n3o7", "candidate": true, "reasons": ["body>=300", "author_followup>=300", "comments>=15"], "signals": {"body_len": 897, "author_followup_chars": 1064, "author_followup_count": 17, "score": 3, "num_comments": 39}}
+{"id": "1u7nejo", "candidate": true, "reasons": ["body>=300", "author_followup>=300"], "signals": {"body_len": 910, "author_followup_chars": 1895, "author_followup_count": 8, "score": 1, "num_comments": 0}}
 {"id": "1u7pbnb", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 2055, "author_followup_chars": 34, "author_followup_count": 1, "score": 1, "num_comments": 0}}
 {"id": "1u7pgxf", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
 {"id": "1u7r1qn", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
@@ -54382,4 +54382,35 @@
 {"id": "1u7yl1n", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 824, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
 {"id": "1u7z7vb", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 1476, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
 {"id": "1u7zczr", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 1178, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
-{"id": "1u82uh1", "candidate": false, "reasons": ["no_substance_signal"], "signals": {"body_len": 137, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u82uh1", "candidate": true, "reasons": ["author_followup>=300"], "signals": {"body_len": 137, "author_followup_chars": 1420, "author_followup_count": 2, "score": 1, "num_comments": 0}}
+{"id": "1u8453t", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u84kh7", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u84sbj", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u8517o", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u85g7u", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 617, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u885ck", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u8b0vf", "candidate": true, "reasons": ["body>=300", "author_followup>=300"], "signals": {"body_len": 1412, "author_followup_chars": 852, "author_followup_count": 2, "score": 1, "num_comments": 0}}
+{"id": "1u8cc6m", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 1673, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u8cibr", "candidate": false, "reasons": ["no_substance_signal"], "signals": {"body_len": 69, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u8cmko", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 507, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u8cv1v", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u8cwee", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 520, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u8de19", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u8e313", "candidate": false, "reasons": ["no_substance_signal"], "signals": {"body_len": 265, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u8foa6", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u8g4n9", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 13363, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u8g5rp", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 13363, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u8gpa9", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 667, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u8h1gp", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 1672, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u8hefc", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u8hrrr", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u8i50z", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 3240, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u8jkc8", "candidate": false, "reasons": ["no_substance_signal"], "signals": {"body_len": 284, "author_followup_chars": 39, "author_followup_count": 1, "score": 1, "num_comments": 0}}
+{"id": "1u8kkao", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 3412, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u8lqus", "candidate": false, "reasons": ["promo_link_no_substance"], "signals": {"body_len": 215, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u8sbtt", "candidate": false, "reasons": ["no_substance_signal"], "signals": {"body_len": 215, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u8sgg1", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 36, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u8ugl1", "candidate": false, "reasons": ["no_substance_signal"], "signals": {"body_len": 298, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u8vufa", "candidate": true, "reasons": ["body>=300"], "signals": {"body_len": 1683, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u8z4oq", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
+{"id": "1u8zedg", "candidate": false, "reasons": ["nothing_to_read"], "signals": {"body_len": 0, "author_followup_chars": 0, "author_followup_count": 0, "score": 1, "num_comments": 0}}
